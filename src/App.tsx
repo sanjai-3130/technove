@@ -215,9 +215,9 @@ export default function App() {
     setIsSubmitting(true);
 
     try {
-      const serviceId = "service_xxxxx";
-      const templateId = "template_xxxxx";
-      const publicKey = "xxxxxxxx";
+      const serviceId = (import.meta as any).env.VITE_EMAILJS_SERVICE_ID || 'service_default';
+      const templateId = (import.meta as any).env.VITE_EMAILJS_TEMPLATE_ID || 'template_default';
+      const publicKey = (import.meta as any).env.VITE_EMAILJS_PUBLIC_KEY || 'public_key_default';
 
       const templateParams = { 
        name: contactForm.name.trim(),
