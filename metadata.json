@@ -1,0 +1,6 @@
+{
+  "name": "Corporate Contact Portal",
+  "description": "An interactive, premium demonstration of a highly responsive corporate 'Get in Touch' button with dynamic ripple effects, built inside a polished corporate landing page.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
