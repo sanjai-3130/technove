@@ -215,32 +215,45 @@ export default function App() {
     setIsSubmitting(true);
 
     try {
-      const serviceId = (import.meta as any).env.VITE_EMAILJS_SERVICE_ID || 'service_default';
-      const templateId = (import.meta as any).env.VITE_EMAILJS_TEMPLATE_ID || 'template_default';
-      const publicKey = (import.meta as any).env.VITE_EMAILJS_PUBLIC_KEY || 'public_key_default';
+  const serviceId = "service_sklut8p";
+  const templateId = "template_6zv69zo";
+  const publicKey = "YLri-D6rQpPKg0zRV";
 
-      const templateParams = { 
-       name: contactForm.name.trim(),
-       email: contactForm.email.trim(),
-       phone: contactForm.phone.trim(),
-       course: contactForm.service,
-       message: contactForm.message.trim(),
-       to_email: "technovacareersolutions@gmail.com"
-      };
+  const templateParams = {
+    name: contactForm.name.trim(),
+    email: contactForm.email.trim(),
+    phone: contactForm.phone.trim(),
+    course: contactForm.service,
+    message: contactForm.message.trim(),
+    to_email: "technovacareersolutions@gmail.com"
+  };
 
-        await emailjs.send(serviceId, templateId, templateParams, publicKey);
-     
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-      setSubmitError(null);
+  await emailjs.send(
+    serviceId,
+    templateId,
+    templateParams,
+    publicKey
+  );
 
-      setTimeout(() => {
-        setIsSubmitted(false);
-        setIsContactModalOpen(false);
-        setContactForm({ name: '', email: '', phone: '', service: 'Java Full Stack Development', message: '' });
-      }, 4000);
-    } catch (error) {
-      console.error('EmailJS submit error:', error);
+  setIsSubmitting(false);
+  setIsSubmitted(true);
+  setSubmitError(null);
+
+  setTimeout(() => {
+    setIsSubmitted(false);
+    setIsContactModalOpen(false);
+    setContactForm({
+      name: "",
+      email: "",
+      phone: "",
+      service: "Java Full Stack Development",
+      message: ""
+    });
+  }, 4000);
+
+} catch (error) {
+  console.error("EmailJS submit error:", error);
+}
       setIsSubmitting(false);
       setSubmitError('Failed to send enquiry. Please try again.');
     }
