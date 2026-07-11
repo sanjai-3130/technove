@@ -231,7 +231,6 @@ export default function App() {
       const serviceId = "service_sklut8p";
       const templateId = "template_6zv69zo";
       const publicKey = "YLri-D6rQpPKg0zRV";
-      await emailjs.send(serviceId, templateId, templateParams, publicKey);
 
       setIsSubmitting(false);
       setIsSubmitted(true);
