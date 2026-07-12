@@ -384,7 +384,7 @@ export default function App() {
 
             <div className="flex flex-col justify-center">
               <span className="text-xl font-extrabold tracking-wider text-[#2563EB] font-display leading-tight m-0 p-0 select-none">
-                TECH NOVA
+                TECHNOVA
               </span>
               <span className="text-[11px] tracking-[0.16em] uppercase text-slate-500 font-semibold leading-none mt-1 select-none font-sans">
                 Career Solution
