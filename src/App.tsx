@@ -253,7 +253,7 @@ export default function App() {
 
 } catch (error) {
   console.error("EmailJS submit error:", error);
-}
+};
 
   // Predefined service offerings
   const services = [
