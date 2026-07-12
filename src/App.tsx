@@ -252,8 +252,11 @@ export default function App() {
   }, 4000);
 
 } catch (error) {
-  console.error("EmailJS submit error:", error);
-};
+      console.error('EmailJS submit error:', error);
+      setIsSubmitting(false);
+      setSubmitError('Failed to send enquiry. Please try again.');
+    }
+  };
 
   // Predefined service offerings
   const services = [
