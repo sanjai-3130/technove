@@ -9,7 +9,6 @@
   "preview": "vite preview",
   "start": "vite preview --host 0.0.0.0 --port $PORT",
   "lint": "tsc --noEmit"
-}
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
