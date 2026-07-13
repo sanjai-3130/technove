@@ -420,7 +420,7 @@ export default function App() {
                 className="group/text focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 rounded-lg transition-all flex flex-col"
               >
                 <span className="text-xl font-extrabold tracking-wider text-[#2563EB] font-display leading-tight m-0 p-0 select-none group-hover/text:text-blue-700 transition-colors">
-                  TECH NOVA
+                  TECHNOVA
                 </span>
                 <span className="text-[11px] tracking-[0.16em] uppercase text-slate-500 font-semibold leading-none mt-1 select-none font-sans">
                   Career Solution
@@ -790,7 +790,7 @@ export default function App() {
               OUR MISSION
             </span>
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mt-3 font-display">
-              About Tech Nova
+              About TechNova
             </h2>
             <p className="text-slate-600 mt-4 leading-relaxed">
               We specialize in structured career acceleration, transforming talented individuals into highly productive engineering leads. With direct support from tier-1 MNCs, we bridge industry gaps securely.
@@ -806,7 +806,7 @@ export default function App() {
             >
               <h3 className="text-lg md:text-xl font-extrabold text-slate-900 mb-6 font-display flex items-center gap-2.5">
                 <span className="w-1.5 h-6 bg-blue-600 rounded-full" />
-                Why Choose Tech Nova?
+                Why Choose TechNova?
               </h3>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1310,7 +1310,7 @@ export default function App() {
                     <div>
                       <p className="text-xs text-slate-400 font-medium">Location</p>
                       <p className="text-sm font-semibold text-slate-100">
-                        Tech Nova Career Solution<br />
+                        TechNova Career Solution<br />
                         Chennai, Tamil Nadu, India
                       </p>
                     </div>
@@ -1484,7 +1484,7 @@ export default function App() {
             <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-5 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <HeartHandshake className="w-5 h-5 text-blue-100" />
-                <h3 className="text-lg font-bold font-display">Tech Nova Consultations</h3>
+                <h3 className="text-lg font-bold font-display">TechNova Consultations</h3>
               </div>
               <button 
                 onClick={() => setIsContactModalOpen(false)}
@@ -1687,7 +1687,7 @@ export default function App() {
                 </div>
                 <div className="flex flex-col">
                   <span className="text-xl font-extrabold tracking-wider text-white font-display leading-tight select-none">
-                    TECH NOVA
+                    TECHNOVA
                   </span>
                   <span className="text-[10px] tracking-[0.16em] uppercase text-blue-400 font-bold leading-none mt-1 select-none">
                     Career Solution
@@ -1736,7 +1736,7 @@ export default function App() {
                     <MapPin className="w-4 h-4" />
                   </div>
                   <span className="text-sm text-slate-400 leading-relaxed pt-0.5">
-                    Tech Nova Career Solution<br />
+                    TechNova Career Solution<br />
                     Chennai, Tamil Nadu, India
                   </span>
                 </li>
@@ -1792,7 +1792,7 @@ export default function App() {
           {/* Copyright Section */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-slate-400 text-center md:text-left select-none">
-              © 2026 Tech Nova Career Solution. All Rights Reserved.
+              © 2026 TechNova Career Solution. All Rights Reserved.
             </p>
           </div>
         </div>
