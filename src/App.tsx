@@ -36,7 +36,12 @@ import {
   Code2,
   Instagram,
   Linkedin,
-  ArrowUp
+  ArrowUp,
+  Laptop,
+  Calendar,
+  Check,
+  RefreshCw,
+  UserCheck
 } from 'lucide-react';
 
 // Define the type for the custom ripple effect
@@ -46,6 +51,15 @@ interface Ripple {
   y: number;
   size: number;
 }
+
+const marqueeItems = [
+  { icon: GraduationCap, text: "Students" },
+  { icon: Award, text: "Fresh Graduates" },
+  { icon: Briefcase, text: "Non-IT Professionals Transitioning into IT" },
+  { icon: RefreshCw, text: "Career Changers" },
+  { icon: UserCheck, text: "Professionals Returning After a Career Break" },
+  { icon: BookOpen, text: "Internship Seekers" }
+];
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<string>('Home');
@@ -214,7 +228,7 @@ export default function App() {
 
     setIsSubmitting(true);
 
-   try {
+    try {
   const serviceId = "service_sklut8p";
   const templateId = "template_6zv69zo";
   const publicKey = "YLri-D6rQpPKg0zRV";
@@ -258,6 +272,7 @@ export default function App() {
     }
   };
 
+
   // Predefined service offerings
   const services = [
     {
@@ -279,6 +294,19 @@ export default function App() {
 
   // Course expansion state
   const [showAllCourses, setShowAllCourses] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState<string>('All');
+
+  const filterCategories = [
+    'All',
+    'Full Stack',
+    'Data',
+    'AI',
+    'Cloud',
+    'Design',
+    'Marketing',
+    'Mobile',
+    'Testing'
+  ];
 
   // Helper render function for course cards to ensure perfect consistency
   const renderCard = (course: typeof coursesData[0]) => (
@@ -318,18 +346,6 @@ export default function App() {
             {course.description}
           </p>
 
-          {/* Level & Duration Details */}
-          <div className="grid grid-cols-2 gap-2 py-3 border-t border-b border-slate-100 mb-4 bg-slate-50/50 rounded-xl px-3">
-            <div className="flex items-center gap-1.5 text-slate-500 text-[11px] font-semibold">
-              <Clock className="w-3.5 h-3.5 text-[#2563EB] flex-shrink-0" />
-              <span>{course.duration}</span>
-            </div>
-            <div className="flex items-center gap-1.5 text-slate-500 text-[11px] font-semibold">
-              <Sparkles className="w-3.5 h-3.5 text-indigo-500 flex-shrink-0" />
-              <span>{course.level} Level</span>
-            </div>
-          </div>
-
           {/* Skills List */}
           <div className="flex flex-wrap gap-1.5">
             {course.skills.map((skill, sIdx) => (
@@ -360,6 +376,14 @@ export default function App() {
     </div>
   );
 
+  const filteredCourses = selectedFilter === 'All'
+    ? coursesData
+    : coursesData.filter(course => course.category === selectedFilter);
+
+  const visibleCourses = selectedFilter === 'All'
+    ? (showAllCourses ? filteredCourses : filteredCourses.slice(0, 6))
+    : filteredCourses;
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans selection:bg-blue-600 selection:text-white relative overflow-x-hidden pb-0">
       
@@ -370,27 +394,52 @@ export default function App() {
 
       {/* STICKY MODERN PREMIUM NAVIGATION HEADER */}
       <header className="sticky top-0 z-50 w-full px-4 pt-4 pb-2 transition-all duration-300">
-        <div id="main-navbar" className="max-w-7xl mx-auto h-20 bg-white/75 backdrop-blur-xl border border-white/40 rounded-2xl shadow-[0_8px_32px_0_rgba(148,163,184,0.12)] flex items-center justify-between px-6 md:px-8 relative overflow-hidden transition-all duration-300">
+        <div id="main-navbar" className="max-w-7xl mx-auto min-h-[5.5rem] py-3 lg:py-2.5 bg-white/75 backdrop-blur-xl border border-white/40 rounded-2xl shadow-[0_8px_32px_0_rgba(148,163,184,0.12)] flex items-center justify-between px-6 md:px-8 relative overflow-hidden transition-all duration-300">
           
           {/* Company Logo and Text Branding */}
-          <a href="#home" onClick={() => setActiveTab('Home')} className="flex items-center gap-[15px] group focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 rounded-xl p-1 transition-all">
-            {/* Uploaded official Tech Nova Logo */}
-            <img 
-              src={companyLogo} 
-              alt="Tech Nova Logo" 
-              referrerPolicy="no-referrer"
-              className="w-[40px] h-[40px] md:w-[48px] md:h-[48px] lg:w-[55px] lg:h-[55px] object-contain mix-blend-multiply flex-shrink-0 transition-transform duration-500 group-hover:rotate-[15deg]"
-            />
+          <div className="flex items-center gap-[15px] group p-1">
+            {/* Logo Link */}
+            <a 
+              href="#home" 
+              onClick={() => setActiveTab('Home')} 
+              className="focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 rounded-xl transition-all flex-shrink-0"
+            >
+              {/* Uploaded official Tech Nova Logo */}
+              <img 
+                src={companyLogo} 
+                alt="Tech Nova Logo" 
+                referrerPolicy="no-referrer"
+                className="w-[40px] h-[40px] md:w-[48px] md:h-[48px] lg:w-[55px] lg:h-[55px] object-contain mix-blend-multiply flex-shrink-0 transition-transform duration-500 group-hover:rotate-[15deg]"
+              />
+            </a>
 
             <div className="flex flex-col justify-center">
-              <span className="text-xl font-extrabold tracking-wider text-[#2563EB] font-display leading-tight m-0 p-0 select-none">
-                TECHNOVA
-              </span>
-              <span className="text-[11px] tracking-[0.16em] uppercase text-slate-500 font-semibold leading-none mt-1 select-none font-sans">
-                Career Solution
-              </span>
+              <a 
+                href="#home" 
+                onClick={() => setActiveTab('Home')} 
+                className="group/text focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 rounded-lg transition-all flex flex-col"
+              >
+                <span className="text-xl font-extrabold tracking-wider text-[#2563EB] font-display leading-tight m-0 p-0 select-none group-hover/text:text-blue-700 transition-colors">
+                  TECH NOVA
+                </span>
+                <span className="text-[11px] tracking-[0.16em] uppercase text-slate-500 font-semibold leading-none mt-1 select-none font-sans">
+                  Career Solution
+                </span>
+              </a>
+              {/* Responsive contact details below the company name */}
+              <div className="flex flex-col sm:flex-row sm:items-center gap-x-2 gap-y-0.5 mt-1.5 text-[9px] md:text-[10px] font-semibold text-slate-600 font-sans">
+                <a href="tel:+919952077910" className="flex items-center gap-1 hover:text-[#2563EB] transition-colors whitespace-nowrap">
+                  <Phone className="w-2.5 h-2.5 text-[#2563EB]" />
+                  <span>+91 99520 77910</span>
+                </a>
+                <span className="hidden sm:inline text-slate-300">|</span>
+                <a href="tel:+919894617232" className="flex items-center gap-1 hover:text-[#2563EB] transition-colors whitespace-nowrap">
+                  <Phone className="w-2.5 h-2.5 text-[#2563EB]" />
+                  <span>+91 98946 17232</span>
+                </a>
+              </div>
             </div>
-          </a>
+          </div>
 
           {/* Desktop Navigation pill-shaped buttons */}
           <nav className="hidden lg:flex items-center gap-2">
@@ -509,6 +558,41 @@ export default function App() {
           </div>
         )}
       </header>
+      
+      {/* PREMIUM ANNOUNCEMENT TICKER */}
+      <div 
+        id="announcement-ticker" 
+        className="w-full bg-gradient-to-r from-[#2563EB] to-[#4F46E5] text-white h-14 md:h-[58px] flex items-center overflow-hidden shadow-[0_8px_30px_rgba(37,99,235,0.15)] rounded-b-2xl relative z-40 border-t border-white/10"
+      >
+        <div className="w-full overflow-hidden flex items-center">
+          <div className="animate-marquee flex items-center whitespace-nowrap">
+            {/* Set 1 */}
+            {marqueeItems.map((item, idx) => (
+              <div key={`marquee-1-${idx}`} className="flex items-center">
+                <div className="flex items-center gap-2.5 mx-8">
+                  <item.icon className="w-4.5 h-4.5 text-blue-100 flex-shrink-0" />
+                  <span className="text-xs md:text-sm font-bold tracking-wide select-none">
+                    {item.text}
+                  </span>
+                </div>
+                <span className="text-blue-100/30 font-light select-none text-base">│</span>
+              </div>
+            ))}
+            {/* Set 2 */}
+            {marqueeItems.map((item, idx) => (
+              <div key={`marquee-2-${idx}`} className="flex items-center">
+                <div className="flex items-center gap-2.5 mx-8">
+                  <item.icon className="w-4.5 h-4.5 text-blue-100 flex-shrink-0" />
+                  <span className="text-xs md:text-sm font-bold tracking-wide select-none">
+                    {item.text}
+                  </span>
+                </div>
+                <span className="text-blue-100/30 font-light select-none text-base">│</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
 
       {/* CORE PRESENTATION BODY */}
       <main className="max-w-7xl mx-auto px-4 md:px-6 mt-6 relative z-10">
@@ -531,7 +615,7 @@ export default function App() {
             </h1>
             
             <p className="text-lg text-slate-600 max-w-2xl leading-relaxed">
-              TechNova provides world-class, industry-ready training with expert mentorship, practical experience, and career-focused learning. Join over 2,000+ certified professionals shaping the future globally
+              Tech Nova delivers a unified, high-tier modern curriculum pairing state-of-the-art software systems with direct, prioritized corporate hiring pipelines. Join over 8,000+ certified specialists active globally.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mt-2">
@@ -711,6 +795,44 @@ export default function App() {
             <p className="text-slate-600 mt-4 leading-relaxed">
               We specialize in structured career acceleration, transforming talented individuals into highly productive engineering leads. With direct support from tier-1 MNCs, we bridge industry gaps securely.
             </p>
+
+            {/* Why Choose Tech Nova? Subsection with Framer Motion fade-in */}
+            <motion.div 
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="mt-12 text-left bg-gradient-to-b from-blue-50/50 to-indigo-50/20 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-blue-100/60 shadow-sm transition-all duration-300 hover:shadow-md"
+            >
+              <h3 className="text-lg md:text-xl font-extrabold text-slate-900 mb-6 font-display flex items-center gap-2.5">
+                <span className="w-1.5 h-6 bg-blue-600 rounded-full" />
+                Why Choose Tech Nova?
+              </h3>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {[
+                  "Industry-aligned curriculum with the latest technologies",
+                  "Expert trainers with real-world industry experience",
+                  "Hands-on learning through live projects and practical assignments",
+                  "Personalized mentorship and career guidance",
+                  "Internship opportunities and placement support",
+                  "Soft skills, interview preparation, and resume development",
+                  "Flexible learning modes – Classroom, Online, and Hybrid"
+                ].map((item, idx) => (
+                  <div 
+                    key={idx} 
+                    className="flex items-start gap-3 p-3 rounded-xl hover:bg-white/60 transition-all duration-300 group"
+                  >
+                    <div className="w-6 h-6 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                      <Check className="w-3.5 h-3.5 stroke-[3]" />
+                    </div>
+                    <span className="text-slate-700 text-sm font-medium leading-relaxed group-hover:text-slate-900 transition-colors duration-300">
+                      {item}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -784,7 +906,7 @@ export default function App() {
 
         {/* SECTION: COURSES */}
         <section id="courses" className="py-16 border-t border-slate-200/60">
-          <div className="text-center max-w-3xl mx-auto mb-14">
+          <div className="text-center max-w-3xl mx-auto mb-10">
             <span className="text-blue-600 font-bold text-xs tracking-widest uppercase bg-blue-50 px-3 py-1 rounded-full">
               OUR COURSES
             </span>
@@ -796,18 +918,47 @@ export default function App() {
             </p>
           </div>
 
-          {/* Responsive Course Grid: 4 cols on desktop, 2 cols on tablet, 1 col on mobile */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto px-4">
-            {coursesData.slice(0, 6).map((course) => (
-              <div key={course.title} className="h-full">
-                {renderCard(course)}
+          {/* Professional Course Filter Section */}
+          <div className="max-w-7xl mx-auto px-4 mb-12">
+            <div className="flex items-center justify-start md:justify-center overflow-x-auto pb-4 md:pb-0 scrollbar-none">
+              <div className="flex items-center gap-2 p-1.5 bg-slate-100/80 backdrop-blur-md rounded-full border border-slate-200/60 shadow-[0_4px_20px_rgba(148,163,184,0.05)] whitespace-nowrap min-w-max md:min-w-0">
+                {filterCategories.map((category) => {
+                  const isActive = selectedFilter === category;
+                  return (
+                    <button
+                      key={category}
+                      onClick={() => setSelectedFilter(category)}
+                      className={`relative px-5 py-2.5 rounded-full text-xs md:text-sm font-bold tracking-wide transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/40 ${
+                        isActive
+                          ? 'text-white'
+                          : 'text-slate-600 hover:text-[#2563EB]'
+                      }`}
+                    >
+                      {isActive && (
+                        <motion.div
+                          layoutId="activeCourseFilterIndicator"
+                          className="absolute inset-0 bg-[#2563EB] rounded-full shadow-[0_4px_12px_rgba(37,99,235,0.3)]"
+                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        />
+                      )}
+                      <span className="relative z-10">{category}</span>
+                    </button>
+                  );
+                })}
               </div>
-            ))}
-            
+            </div>
+          </div>
+
+          {/* Responsive Course Grid: 4 cols on desktop, 2 cols on tablet, 1 col on mobile */}
+          <motion.div 
+            layout="position"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto px-4 min-h-[300px]"
+          >
             <AnimatePresence mode="popLayout">
-              {showAllCourses && coursesData.slice(6).map((course, idx) => (
+              {visibleCourses.map((course, idx) => (
                 <motion.div
                   key={course.title}
+                  layout
                   initial={{ opacity: 0, y: 30, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -822,21 +973,213 @@ export default function App() {
                 </motion.div>
               ))}
             </AnimatePresence>
-          </div>
+          </motion.div>
 
           {/* Centered See More Courses / Show Less Button */}
-          <div className="flex justify-center mt-12">
-            <button 
-              onClick={() => setShowAllCourses(!showAllCourses)} 
-              className="inline-flex items-center gap-2 bg-white border-2 border-[#2563EB] text-[#2563EB] hover:bg-[#2563EB] hover:text-white font-bold px-8 py-3.5 rounded-full shadow-[0_4px_14px_rgba(37,99,235,0.1)] hover:shadow-[0_6px_20px_rgba(37,99,235,0.25)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
-            >
-              <span>{showAllCourses ? "Show Less" : "See More Courses"}</span>
-              {showAllCourses ? (
-                <ChevronUp className="w-5 h-5 transition-transform" />
-              ) : (
-                <ChevronDown className="w-5 h-5 transition-transform" />
-              )}
-            </button>
+          {selectedFilter === 'All' && (
+            <div className="flex justify-center mt-12">
+              <button 
+                onClick={() => setShowAllCourses(!showAllCourses)} 
+                className="inline-flex items-center gap-2 bg-white border-2 border-[#2563EB] text-[#2563EB] hover:bg-[#2563EB] hover:text-white font-bold px-8 py-3.5 rounded-full shadow-[0_4px_14px_rgba(37,99,235,0.1)] hover:shadow-[0_6px_20px_rgba(37,99,235,0.25)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
+              >
+                <span>{showAllCourses ? "Show Less" : "See More Courses"}</span>
+                {showAllCourses ? (
+                  <ChevronUp className="w-5 h-5 transition-transform" />
+                ) : (
+                  <ChevronDown className="w-5 h-5 transition-transform" />
+                )}
+              </button>
+            </div>
+          )}
+        </section>
+
+        {/* SECTION: MODES OF TRAINING */}
+        <section id="training-modes" className="py-20 border-t border-slate-200/60 bg-gradient-to-b from-white to-blue-50/20 relative overflow-hidden">
+          {/* Subtle background decoration elements */}
+          <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-blue-50/60 rounded-full blur-3xl pointer-events-none -z-10" />
+          <div className="absolute top-12 right-0 w-80 h-80 bg-indigo-50/40 rounded-full blur-3xl pointer-events-none -z-10" />
+
+          <div className="text-center max-w-3xl mx-auto mb-16 px-4">
+            <span className="text-blue-600 font-bold text-xs tracking-widest uppercase bg-blue-50 px-4 py-1.5 rounded-full border border-blue-100/50 shadow-sm">
+              TRAINING FLEXIBILITY
+            </span>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mt-4 font-display">
+              Flexible Modes of Training
+            </h2>
+            <p className="text-slate-600 mt-4 leading-relaxed text-sm md:text-base">
+              Choose the learning format that best fits your schedule and lifestyle. Every format is designed with hands-on labs, rigorous mentorship, and our full placement ecosystem.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto px-4 md:px-6">
+            
+            {/* Mode 1: Offline Training */}
+            <div className="group relative bg-white/60 backdrop-blur-lg rounded-[28px] p-8 border border-white/80 shadow-[0_8px_30px_rgba(0,0,0,0.02)] hover:shadow-[0_24px_50px_rgba(37,99,235,0.08)] hover:-translate-y-2 hover:border-blue-300/60 transition-all duration-500 flex flex-col justify-between h-full overflow-hidden">
+              <div className="absolute -top-16 -right-16 w-32 h-32 bg-indigo-500/5 rounded-full blur-2xl group-hover:bg-indigo-500/10 transition-colors duration-500" />
+              
+              <div>
+                <div className="mb-6 w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500 shadow-inner group-hover:scale-110">
+                  <Building2 className="w-7 h-7" />
+                </div>
+
+                <h3 className="text-xl font-extrabold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors duration-300">
+                  Offline Training
+                </h3>
+
+                <p className="text-slate-600 text-sm leading-relaxed mb-6">
+                  Immersive on-campus environment with premium amenities, high-speed dev labs, and direct face-to-face mentorship. Learn side-by-side with peers and collaborate on physical hackathons.
+                </p>
+
+                <div className="space-y-3.5 border-t border-slate-100/80 pt-5 mb-8">
+                  <div className="flex items-center gap-3 text-slate-600 text-xs font-semibold">
+                    <div className="w-8 h-8 rounded-lg bg-blue-50/80 flex items-center justify-center text-blue-600 flex-shrink-0">
+                      <Clock className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">DURATION</p>
+                      <p className="text-slate-700">Structured (3 to 4 Months)</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3 text-slate-600 text-xs font-semibold">
+                    <div className="w-8 h-8 rounded-lg bg-indigo-50/80 flex items-center justify-center text-indigo-600 flex-shrink-0">
+                      <Calendar className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">TIMING</p>
+                      <p className="text-slate-700">Morning & Afternoon Weekday Batches</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button 
+                onClick={(e) => {
+                  handleButtonClick(e);
+                  setIsContactModalOpen(true);
+                }}
+                className="w-full py-3.5 bg-white border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white hover:shadow-lg hover:shadow-indigo-500/15 font-bold rounded-2xl active:scale-95 transition-all duration-300 cursor-pointer text-center text-sm flex items-center justify-center gap-2 group/btn"
+              >
+                <span>Enroll Now</span>
+                <ArrowRight className="w-4 h-4 transform group-hover/btn:translate-x-1 transition-transform duration-300" />
+              </button>
+            </div>
+
+            {/* Mode 2: Online Training */}
+            <div className="group relative bg-white/60 backdrop-blur-lg rounded-[28px] p-8 border border-white/80 shadow-[0_8px_30px_rgba(0,0,0,0.02)] hover:shadow-[0_24px_50px_rgba(37,99,235,0.08)] hover:-translate-y-2 hover:border-blue-300/60 transition-all duration-500 flex flex-col justify-between h-full overflow-hidden">
+              <div className="absolute -top-16 -right-16 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-colors duration-500" />
+              
+              <div>
+                {/* Icon Wrapper */}
+                <div className="mb-6 w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all duration-500 shadow-inner group-hover:scale-110">
+                  <Globe className="w-7 h-7" />
+                </div>
+
+                {/* Name */}
+                <h3 className="text-xl font-extrabold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
+                  Online Training
+                </h3>
+
+                {/* Description */}
+                <p className="text-slate-600 text-sm leading-relaxed mb-6">
+                  Live, interactive digital classrooms led by senior cloud and stack architects. Access instant screen-share support, interactive coding sandboxes, and recorded sessions.
+                </p>
+
+                {/* Details list */}
+                <div className="space-y-3.5 border-t border-slate-100/80 pt-5 mb-8">
+                  <div className="flex items-center gap-3 text-slate-600 text-xs font-semibold">
+                    <div className="w-8 h-8 rounded-lg bg-blue-50/80 flex items-center justify-center text-blue-600 flex-shrink-0">
+                      <Clock className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">DURATION</p>
+                      <p className="text-slate-700">Flexible (3 to 6 Months)</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3 text-slate-600 text-xs font-semibold">
+                    <div className="w-8 h-8 rounded-lg bg-indigo-50/80 flex items-center justify-center text-indigo-600 flex-shrink-0">
+                      <Calendar className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">TIMING</p>
+                      <p className="text-slate-700">Evening & Weekend Batches Available</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Button */}
+              <button 
+                onClick={(e) => {
+                  handleButtonClick(e);
+                  setIsContactModalOpen(true);
+                }}
+                className="w-full py-3.5 bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white hover:shadow-lg hover:shadow-blue-500/15 font-bold rounded-2xl active:scale-95 transition-all duration-300 cursor-pointer text-center text-sm flex items-center justify-center gap-2 group/btn"
+              >
+                <span>Enroll Now</span>
+                <ArrowRight className="w-4 h-4 transform group-hover/btn:translate-x-1 transition-transform duration-300" />
+              </button>
+            </div>
+
+            {/* Mode 3: Hybrid Training (Online + Offline) */}
+            <div className="group relative bg-gradient-to-br from-blue-50/40 via-white/80 to-indigo-50/40 backdrop-blur-lg rounded-[28px] p-8 border border-blue-100/50 shadow-[0_12px_35px_rgba(37,99,235,0.04)] hover:shadow-[0_24px_50px_rgba(37,99,235,0.12)] hover:-translate-y-2 hover:border-blue-400/80 transition-all duration-500 flex flex-col justify-between h-full overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-blue-600/10 to-indigo-600/10 rounded-bl-[28px]" />
+              {/* Highlight Tag */}
+              <div className="absolute top-4 right-4 z-10">
+                <span className="text-[9px] font-extrabold text-blue-700 bg-blue-100/70 border border-blue-200 uppercase tracking-widest px-2.5 py-1 rounded-full shadow-sm">
+                  RECOMMENDED
+                </span>
+              </div>
+
+              <div>
+                <div className="mb-6 w-14 h-14 bg-gradient-to-tr from-blue-600 to-indigo-600 text-white rounded-2xl flex items-center justify-center transition-all duration-500 shadow-md group-hover:scale-110 shadow-blue-500/20">
+                  <Laptop className="w-7 h-7" />
+                </div>
+
+                <h3 className="text-xl font-extrabold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
+                  Hybrid Training
+                </h3>
+
+                <p className="text-slate-600 text-sm leading-relaxed mb-6">
+                  The perfect synthesis. Attend engaging, premium live webinars online combined with mandatory weekly physical labs, cohort-focused team hackathons, and on-demand mock drives.
+                </p>
+
+                <div className="space-y-3.5 border-t border-slate-100/80 pt-5 mb-8">
+                  <div className="flex items-center gap-3 text-slate-600 text-xs font-semibold">
+                    <div className="w-8 h-8 rounded-lg bg-blue-50/80 flex items-center justify-center text-blue-600 flex-shrink-0">
+                      <Clock className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">DURATION</p>
+                      <p className="text-slate-700">Adaptive (4 to 6 Months)</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3 text-slate-600 text-xs font-semibold">
+                    <div className="w-8 h-8 rounded-lg bg-indigo-50/80 flex items-center justify-center text-indigo-600 flex-shrink-0">
+                      <Calendar className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">TIMING</p>
+                      <p className="text-slate-700">Mixed / Customizable Timings</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button 
+                onClick={(e) => {
+                  handleButtonClick(e);
+                  setIsContactModalOpen(true);
+                }}
+                className="w-full py-3.5 bg-[#2563EB] text-white hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-500/20 font-bold rounded-2xl active:scale-95 transition-all duration-300 cursor-pointer text-center text-sm flex items-center justify-center gap-2 group/btn"
+              >
+                <span>Enroll Now</span>
+                <ArrowRight className="w-4 h-4 transform group-hover/btn:translate-x-1 transition-transform duration-300" />
+              </button>
+            </div>
+
           </div>
         </section>
 
