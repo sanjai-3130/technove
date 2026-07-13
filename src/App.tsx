@@ -531,7 +531,7 @@ export default function App() {
             </h1>
             
             <p className="text-lg text-slate-600 max-w-2xl leading-relaxed">
-              Tech Nova delivers a unified, high-tier modern curriculum pairing state-of-the-art software systems with direct, prioritized corporate hiring pipelines. Join over 8,000+ certified specialists active globally.
+              TechNova provides world-class, industry-ready training with expert mentorship, practical experience, and career-focused learning. Join over 2,000+ certified professionals shaping the future globally
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mt-2">
