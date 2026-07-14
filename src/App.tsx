@@ -748,8 +748,9 @@ export default function App() {
             </div>
 
             {/* Quick Stats Grid */}
-            <div className="grid grid-cols-3 gap-4 sm:gap-6 pt-6 mt-4 border-t border-slate-200/70 w-full">
-              <div className="bg-white/70 backdrop-blur-md p-4 rounded-2xl border border-slate-200/40 shadow-sm hover:shadow-[0_12px_24px_rgba(37,99,235,0.08)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 flex flex-col justify-center">
+            <div id="quick-stats-grid" className="grid grid-cols-3 gap-3 md:gap-6 pt-6 mt-4 border-t border-slate-200/70 w-full">
+              <div className="bg-white/70 backdrop-blur-md p-4 rounded-2xl border border-slate-200/40 shadow-sm hover:shadow-[0_12px_24px_rgba(37,99,235,0.08)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 flex flex-col items-center justify-center text-center h-full">
+                <TrendingUp className="w-5 h-5 text-[#2563EB] mb-1.5" />
                 <p className="text-2xl sm:text-3xl font-extrabold text-[#2563EB] font-display">
                   <CountUp end={98.4} decimals={1} suffix="%" />
                 </p>
@@ -757,7 +758,8 @@ export default function App() {
                   PLACEMENT RATE
                 </p>
               </div>
-              <div className="bg-white/70 backdrop-blur-md p-4 rounded-2xl border border-slate-200/40 shadow-sm hover:shadow-[0_12px_24px_rgba(37,99,235,0.08)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 flex flex-col justify-center">
+              <div className="bg-white/70 backdrop-blur-md p-4 rounded-2xl border border-slate-200/40 shadow-sm hover:shadow-[0_12px_24px_rgba(37,99,235,0.08)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 flex flex-col items-center justify-center text-center h-full">
+                <Users className="w-5 h-5 text-slate-700 mb-1.5" />
                 <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-display">
                   <CountUp end={2200} decimals={0} suffix="+" />
                 </p>
@@ -765,7 +767,8 @@ export default function App() {
                   ALUMNI NETWORK
                 </p>
               </div>
-              <div className="bg-white/70 backdrop-blur-md p-4 rounded-2xl border border-slate-200/40 shadow-sm hover:shadow-[0_12px_24px_rgba(37,99,235,0.08)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 flex flex-col justify-center">
+              <div className="bg-white/70 backdrop-blur-md p-4 rounded-2xl border border-slate-200/40 shadow-sm hover:shadow-[0_12px_24px_rgba(37,99,235,0.08)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 flex flex-col items-center justify-center text-center h-full">
+                <Building2 className="w-5 h-5 text-slate-700 mb-1.5" />
                 <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-display">
                   <CountUp end={40} decimals={0} suffix="+" />
                 </p>
@@ -1076,6 +1079,7 @@ export default function App() {
           {selectedFilter === 'All' && (
             <div className="flex justify-center mt-12">
               <button 
+                id="see-more-courses-btn"
                 onClick={() => setShowAllCourses(!showAllCourses)} 
                 className="inline-flex items-center gap-2 bg-white border-2 border-[#2563EB] text-[#2563EB] hover:bg-[#2563EB] hover:text-white font-bold px-8 py-3.5 rounded-full shadow-[0_4px_14px_rgba(37,99,235,0.1)] hover:shadow-[0_6px_20px_rgba(37,99,235,0.25)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
               >
