@@ -1412,33 +1412,57 @@ export default function App() {
                 </p>
 
                 <div className="flex flex-col gap-4 mt-4 w-full">
-                  <div className="flex items-center gap-3.5">
-                    <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-blue-300 border border-white/10">
+                  <div className="flex items-start gap-3.5">
+                    <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-blue-300 border border-white/10 mt-1 flex-shrink-0">
                       <Phone className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-xs text-slate-400 font-medium">Phone</p>
-                      <a 
-                        href="#" 
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleCopy('+91 99520 77910', 'contact1');
-                        }}
-                        className="text-sm font-semibold text-slate-100 hover:text-blue-300 transition-colors flex items-center gap-1.5 cursor-pointer"
-                        title="Click to copy +91 99520 77910"
-                      >
-                        <span>+91 99520 77910</span>
-                        {copiedNumber === 'contact1' ? (
-                          <Check className="w-3.5 h-3.5 text-emerald-400 scale-110 transition-transform" />
-                        ) : (
-                          <Copy className="w-3.5 h-3.5 text-slate-400 hover:text-blue-300" />
-                        )}
-                      </a>
+                      <p className="text-xs text-slate-400 font-medium mb-1">Phone</p>
+                      <div className="flex flex-col gap-2">
+                        <div className="flex items-center gap-2">
+                          <a 
+                            href="tel:+919952077910"
+                            className="text-sm font-semibold text-slate-100 hover:text-blue-300 transition-colors"
+                          >
+                            +91 99520 77910
+                          </a>
+                          <button
+                            onClick={() => handleCopy('+91 99520 77910', 'contact1')}
+                            className="text-slate-400 hover:text-blue-300 transition-colors focus:outline-none cursor-pointer flex items-center justify-center"
+                            title="Click to copy +91 99520 77910"
+                          >
+                            {copiedNumber === 'contact1' ? (
+                              <Check className="w-3.5 h-3.5 text-emerald-400 scale-110 transition-transform" />
+                            ) : (
+                              <Copy className="w-3.5 h-3.5 text-slate-400 hover:text-blue-300" />
+                            )}
+                          </button>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <a 
+                            href="tel:+919894617232"
+                            className="text-sm font-semibold text-slate-100 hover:text-blue-300 transition-colors"
+                          >
+                            +91 98946 17232
+                          </a>
+                          <button
+                            onClick={() => handleCopy('+91 98946 17232', 'contact2')}
+                            className="text-slate-400 hover:text-blue-300 transition-colors focus:outline-none cursor-pointer flex items-center justify-center"
+                            title="Click to copy +91 98946 17232"
+                          >
+                            {copiedNumber === 'contact2' ? (
+                              <Check className="w-3.5 h-3.5 text-emerald-400 scale-110 transition-transform" />
+                            ) : (
+                              <Copy className="w-3.5 h-3.5 text-slate-400 hover:text-blue-300" />
+                            )}
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-3.5">
-                    <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-blue-300 border border-white/10">
+                    <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-blue-300 border border-white/10 flex-shrink-0">
                       <Mail className="w-5 h-5" />
                     </div>
                     <div>
