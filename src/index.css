@@ -105,4 +105,107 @@
   animation-play-state: paused;
 }
 
+@keyframes button-shine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+
+.animate-shine {
+  animation: button-shine 2s infinite;
+}
+
+/* Training Card Premium Hover Style */
+.training-card {
+  transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out, background 0.4s ease-in-out, border-color 0.4s ease-in-out !important;
+}
+
+.training-card:hover {
+  transform: translateY(-12px) !important;
+  background: linear-gradient(135deg, #2563EB 0%, #3B82F6 50%, #60A5FA 100%) !important;
+  box-shadow: 0 25px 60px rgba(37,99,235,0.35) !important;
+  border-color: #2563EB !important;
+}
+
+/* Ensure child texts transition smoothly */
+.training-card .card-title,
+.training-card .card-description {
+  transition: color 0.4s ease-in-out !important;
+}
+
+/* Text colors change to white on hover */
+.training-card:hover .card-title,
+.training-card:hover .card-description {
+  color: #ffffff !important;
+}
+
+/* Badge (Hybrid) changes on hover */
+.training-card .card-badge {
+  transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out, border-color 0.4s ease-in-out !important;
+}
+
+.training-card:hover .card-badge {
+  color: #ffffff !important;
+  background-color: rgba(255, 255, 255, 0.25) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* The icon background becomes white with the icon in blue */
+.training-card .icon-wrapper {
+  transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out, transform 0.4s ease-in-out !important;
+}
+
+.training-card:hover .icon-wrapper {
+  background-color: #ffffff !important;
+  color: #2563EB !important;
+}
+
+/* Image slight zoom (scale 1.08) with 0.4s transition */
+.training-card .card-img {
+  transition: transform 0.4s ease-in-out !important;
+}
+
+.training-card:hover .card-img {
+  transform: scale(1.08) !important;
+}
+
+/* Button: enroll-btn default style transition */
+.training-card .enroll-btn {
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out !important;
+}
+
+/* Button hover when card is NOT hovered */
+.training-card:not(:hover) .enroll-btn:hover {
+  background-color: #2563EB !important;
+  color: #ffffff !important;
+  border-color: #2563EB !important;
+}
+
+.training-card:not(:hover) .enroll-btn.border-indigo-600:hover {
+  background-color: #4F46E5 !important;
+  color: #ffffff !important;
+  border-color: #4F46E5 !important;
+}
+
+/* When card is hovered, enroll-btn becomes white with blue text */
+.training-card:hover .enroll-btn {
+  background-color: #ffffff !important;
+  color: #2563EB !important;
+  border-color: #ffffff !important;
+}
+
+/* Arrow inside enroll button slides to the right on hover */
+.training-card .arrow-icon {
+  transition: transform 0.3s ease-in-out, color 0.3s ease-in-out !important;
+}
+
+.training-card:hover .arrow-icon,
+.training-card:not(:hover) .enroll-btn:hover .arrow-icon {
+  transform: translateX(4px) !important;
+}
+
+
 

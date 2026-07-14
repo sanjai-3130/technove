@@ -67,7 +67,7 @@ export const coursesData: Course[] = [
     level: "Advanced",
     description: "Build neural network layers, large language models (LLMs), computer vision agents, and cognitive systems.",
     skills: ["PyTorch", "NLP", "Generative AI", "Computer Vision", "Transformers"],
-    image: "https://images.unsplash.com/photo-1675557009875-436f09780264?auto=format&fit=crop&q=80&w=600",
+    image: "https://plus.unsplash.com/premium_photo-1683121710572-7723bd2e235d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXJ0aWZpY2lhbCUyMGludGVsbGlnZW5jZXxlbnwwfHwwfHx8MA%3D%3D",
     category: "AI"
   },
   {

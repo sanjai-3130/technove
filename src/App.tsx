@@ -61,6 +61,69 @@ const marqueeItems = [
   { icon: BookOpen, text: "Internship Seekers" }
 ];
 
+interface CountUpProps {
+  end: number;
+  decimals?: number;
+  suffix?: string;
+  duration?: number;
+}
+
+function CountUp({ end, decimals = 0, suffix = "", duration = 2000 }: CountUpProps) {
+  const [count, setCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const elementRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasAnimated]);
+
+  useEffect(() => {
+    if (!hasAnimated) return;
+
+    let startTime: number | null = null;
+    const step = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      
+      // outQuad easing
+      const easeProgress = progress * (2 - progress);
+      const currentCount = easeProgress * end;
+      setCount(currentCount);
+
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      } else {
+        setCount(end);
+      }
+    };
+
+    window.requestAnimationFrame(step);
+  }, [hasAnimated, end, duration]);
+
+  return (
+    <span ref={elementRef}>
+      {count.toLocaleString(undefined, {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
+      })}
+      {suffix}
+    </span>
+  );
+}
+
 export default function App() {
   const [activeTab, setActiveTab] = useState<string>('Home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
@@ -313,13 +376,31 @@ export default function App() {
     <div className="bg-white rounded-[24px] border border-slate-100 overflow-hidden shadow-sm hover:shadow-2xl hover:border-blue-500/20 hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between h-full group relative">
       <div>
         {/* Course Image & Badges */}
-        <div className="relative h-48 w-full overflow-hidden bg-slate-100">
+        <div className="relative h-[220px] w-full overflow-hidden bg-slate-100 rounded-t-[24px]">
           <img 
             src={course.image} 
             alt={course.title} 
             referrerPolicy="no-referrer"
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 rounded-t-[24px]"
+            onError={(e) => {
+              const fallbackMap: Record<string, string> = {
+                'Full Stack': 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=600',
+                'Data': 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600',
+                'AI': 'https://images.unsplash.com/photo-1675557009875-436f09780264?auto=format&fit=crop&q=80&w=600',
+                'Cloud': 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=600',
+                'Design': 'https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&q=80&w=600',
+                'Marketing': 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600',
+                'Mobile': 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=600',
+                'Testing': 'https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?auto=format&fit=crop&q=80&w=600',
+              };
+              const fallback = fallbackMap[course.category] || 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=600';
+              if (e.currentTarget.src !== fallback) {
+                e.currentTarget.src = fallback;
+              }
+            }}
           />
+          {/* Subtle dark gradient overlay for better readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/45 via-transparent to-transparent pointer-events-none" />
           {/* Course Badge */}
           <div className="absolute top-4 left-4 z-10">
             <span className="text-[11px] font-extrabold text-blue-600 bg-blue-50/95 backdrop-blur-sm border border-blue-100 uppercase tracking-wider px-3 py-1 rounded-full shadow-sm">
@@ -397,7 +478,10 @@ export default function App() {
         <div id="main-navbar" className="max-w-7xl mx-auto min-h-[5.5rem] py-3 lg:py-2.5 bg-white/75 backdrop-blur-xl border border-white/40 rounded-2xl shadow-[0_8px_32px_0_rgba(148,163,184,0.12)] flex items-center justify-between px-6 md:px-8 relative overflow-hidden transition-all duration-300">
           
           {/* Company Logo and Text Branding */}
-          <div className="flex items-center gap-[15px] group p-1">
+          <div 
+            className="flex items-center gap-[18px] group p-1"
+            style={{ display: 'flex', alignItems: 'center', gap: '18px' }}
+          >
             {/* Logo Link */}
             <a 
               href="#home" 
@@ -409,7 +493,8 @@ export default function App() {
                 src={companyLogo} 
                 alt="Tech Nova Logo" 
                 referrerPolicy="no-referrer"
-                className="w-[40px] h-[40px] md:w-[48px] md:h-[48px] lg:w-[55px] lg:h-[55px] object-contain mix-blend-multiply flex-shrink-0 transition-transform duration-500 group-hover:rotate-[15deg]"
+                style={{ width: '70px', height: '70px' }}
+                className="object-contain mix-blend-multiply flex-shrink-0 transition-transform duration-500 group-hover:rotate-[15deg]"
               />
             </a>
 
@@ -419,8 +504,8 @@ export default function App() {
                 onClick={() => setActiveTab('Home')} 
                 className="group/text focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 rounded-lg transition-all flex flex-col"
               >
-                <span className="text-xl font-extrabold tracking-wider text-[#2563EB] font-display leading-tight m-0 p-0 select-none group-hover/text:text-blue-700 transition-colors">
-                  TECHNOVA
+                <span className="text-xl md:text-2xl font-extrabold tracking-wider text-[#2563EB] font-display leading-tight m-0 p-0 select-none group-hover/text:text-blue-700 transition-colors">
+                  TECH NOVA
                 </span>
                 <span className="text-[11px] tracking-[0.16em] uppercase text-slate-500 font-semibold leading-none mt-1 select-none font-sans">
                   Career Solution
@@ -663,18 +748,30 @@ export default function App() {
             </div>
 
             {/* Quick Stats Grid */}
-            <div className="grid grid-cols-3 gap-6 sm:gap-10 pt-6 mt-4 border-t border-slate-200/70 w-full">
-              <div>
-                <p className="text-3xl font-extrabold text-blue-600 font-display">98.4%</p>
-                <p className="text-xs text-slate-500 font-medium tracking-wide uppercase mt-1">Placement Rate</p>
+            <div className="grid grid-cols-3 gap-4 sm:gap-6 pt-6 mt-4 border-t border-slate-200/70 w-full">
+              <div className="bg-white/70 backdrop-blur-md p-4 rounded-2xl border border-slate-200/40 shadow-sm hover:shadow-[0_12px_24px_rgba(37,99,235,0.08)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 flex flex-col justify-center">
+                <p className="text-2xl sm:text-3xl font-extrabold text-[#2563EB] font-display">
+                  <CountUp end={98.4} decimals={1} suffix="%" />
+                </p>
+                <p className="text-[9px] sm:text-[10px] md:text-xs text-slate-500 font-bold tracking-wider uppercase mt-1">
+                  PLACEMENT RATE
+                </p>
               </div>
-              <div>
-                <p className="text-3xl font-extrabold text-slate-900 font-display">8,200+</p>
-                <p className="text-xs text-slate-500 font-medium tracking-wide uppercase mt-1">Alumni Active</p>
+              <div className="bg-white/70 backdrop-blur-md p-4 rounded-2xl border border-slate-200/40 shadow-sm hover:shadow-[0_12px_24px_rgba(37,99,235,0.08)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 flex flex-col justify-center">
+                <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-display">
+                  <CountUp end={2200} decimals={0} suffix="+" />
+                </p>
+                <p className="text-[9px] sm:text-[10px] md:text-xs text-slate-500 font-bold tracking-wider uppercase mt-1">
+                  ALUMNI NETWORK
+                </p>
               </div>
-              <div>
-                <p className="text-3xl font-extrabold text-slate-900 font-display">120+</p>
-                <p className="text-xs text-slate-500 font-medium tracking-wide uppercase mt-1">Hiring Partners</p>
+              <div className="bg-white/70 backdrop-blur-md p-4 rounded-2xl border border-slate-200/40 shadow-sm hover:shadow-[0_12px_24px_rgba(37,99,235,0.08)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 flex flex-col justify-center">
+                <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-display">
+                  <CountUp end={40} decimals={0} suffix="+" />
+                </p>
+                <p className="text-[9px] sm:text-[10px] md:text-xs text-slate-500 font-bold tracking-wider uppercase mt-1">
+                  HIRING PARTNERS
+                </p>
               </div>
             </div>
           </div>
@@ -790,7 +887,7 @@ export default function App() {
               OUR MISSION
             </span>
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mt-3 font-display">
-              About TechNova
+              About Tech Nova
             </h2>
             <p className="text-slate-600 mt-4 leading-relaxed">
               We specialize in structured career acceleration, transforming talented individuals into highly productive engineering leads. With direct support from tier-1 MNCs, we bridge industry gaps securely.
@@ -806,7 +903,7 @@ export default function App() {
             >
               <h3 className="text-lg md:text-xl font-extrabold text-slate-900 mb-6 font-display flex items-center gap-2.5">
                 <span className="w-1.5 h-6 bg-blue-600 rounded-full" />
-                Why Choose TechNova?
+                Why Choose Tech Nova?
               </h3>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1014,171 +1111,159 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto px-4 md:px-6">
             
             {/* Mode 1: Offline Training */}
-            <div className="group relative bg-white/60 backdrop-blur-lg rounded-[28px] p-8 border border-white/80 shadow-[0_8px_30px_rgba(0,0,0,0.02)] hover:shadow-[0_24px_50px_rgba(37,99,235,0.08)] hover:-translate-y-2 hover:border-blue-300/60 transition-all duration-500 flex flex-col justify-between h-full overflow-hidden">
-              <div className="absolute -top-16 -right-16 w-32 h-32 bg-indigo-500/5 rounded-full blur-2xl group-hover:bg-indigo-500/10 transition-colors duration-500" />
+            <motion.div 
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+              className="training-card group relative bg-white/60 backdrop-blur-lg rounded-[28px] border border-white/80 shadow-[0_8px_30px_rgba(0,0,0,0.02)] flex flex-col justify-between h-full overflow-hidden"
+            >
+              <div className="absolute top-44 -right-16 w-32 h-32 bg-indigo-500/5 rounded-full blur-2xl group-hover:bg-indigo-500/10 transition-colors duration-500 pointer-events-none" />
               
-              <div>
-                <div className="mb-6 w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500 shadow-inner group-hover:scale-110">
-                  <Building2 className="w-7 h-7" />
-                </div>
-
-                <h3 className="text-xl font-extrabold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors duration-300">
-                  Offline Training
-                </h3>
-
-                <p className="text-slate-600 text-sm leading-relaxed mb-6">
-                  Immersive on-campus environment with premium amenities, high-speed dev labs, and direct face-to-face mentorship. Learn side-by-side with peers and collaborate on physical hackathons.
-                </p>
-
-                <div className="space-y-3.5 border-t border-slate-100/80 pt-5 mb-8">
-                  <div className="flex items-center gap-3 text-slate-600 text-xs font-semibold">
-                    <div className="w-8 h-8 rounded-lg bg-blue-50/80 flex items-center justify-center text-blue-600 flex-shrink-0">
-                      <Clock className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">DURATION</p>
-                      <p className="text-slate-700">Structured (3 to 4 Months)</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 text-slate-600 text-xs font-semibold">
-                    <div className="w-8 h-8 rounded-lg bg-indigo-50/80 flex items-center justify-center text-indigo-600 flex-shrink-0">
-                      <Calendar className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">TIMING</p>
-                      <p className="text-slate-700">Morning & Afternoon Weekday Batches</p>
-                    </div>
-                  </div>
-                </div>
+              <div className="relative h-[220px] w-full overflow-hidden rounded-t-[28px]">
+                <img 
+                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80" 
+                  alt="Offline Training" 
+                  className="card-img w-full h-full object-cover" 
+                  referrerPolicy="no-referrer"
+                />
+                {/* Blue gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/65 via-blue-900/15 to-transparent mix-blend-multiply opacity-80 group-hover:opacity-95 transition-opacity duration-500" />
               </div>
 
-              <button 
-                onClick={(e) => {
-                  handleButtonClick(e);
-                  setIsContactModalOpen(true);
-                }}
-                className="w-full py-3.5 bg-white border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white hover:shadow-lg hover:shadow-indigo-500/15 font-bold rounded-2xl active:scale-95 transition-all duration-300 cursor-pointer text-center text-sm flex items-center justify-center gap-2 group/btn"
-              >
-                <span>Enroll Now</span>
-                <ArrowRight className="w-4 h-4 transform group-hover/btn:translate-x-1 transition-transform duration-300" />
-              </button>
-            </div>
+              <div className="p-8 pt-6 flex flex-col flex-grow justify-between">
+                <div className="flex flex-col flex-grow">
+                  <div className="icon-wrapper mb-6 w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center shadow-inner overflow-hidden">
+                    <Building2 className="w-7 h-7 transform transition-transform duration-500 group-hover:scale-125" />
+                  </div>
+
+                  <h3 className="card-title text-xl font-extrabold text-slate-900 mb-3">
+                    Offline Training
+                  </h3>
+
+                  <p className="card-description text-slate-600 text-sm leading-relaxed mb-8">
+                    Immersive on-campus environment with premium amenities, high-speed dev labs, and direct face-to-face mentorship. Learn side-by-side with peers and collaborate on physical hackathons.
+                  </p>
+                </div>
+
+                <button 
+                  onClick={(e) => {
+                    handleButtonClick(e);
+                    setIsContactModalOpen(true);
+                  }}
+                  className="enroll-btn w-full py-3.5 bg-white border-2 border-indigo-600 text-indigo-600 font-bold rounded-2xl active:scale-95 cursor-pointer text-center text-sm flex items-center justify-center gap-2 group/btn relative overflow-hidden"
+                >
+                  <span className="relative z-10">Enroll Now</span>
+                  <ArrowRight className="arrow-icon w-4 h-4 relative z-10" />
+                  {/* Shine overlay */}
+                  <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 -translate-x-full group-hover/btn:animate-shine pointer-events-none" />
+                </button>
+              </div>
+            </motion.div>
 
             {/* Mode 2: Online Training */}
-            <div className="group relative bg-white/60 backdrop-blur-lg rounded-[28px] p-8 border border-white/80 shadow-[0_8px_30px_rgba(0,0,0,0.02)] hover:shadow-[0_24px_50px_rgba(37,99,235,0.08)] hover:-translate-y-2 hover:border-blue-300/60 transition-all duration-500 flex flex-col justify-between h-full overflow-hidden">
-              <div className="absolute -top-16 -right-16 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-colors duration-500" />
+            <motion.div 
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+              className="training-card group relative bg-white/60 backdrop-blur-lg rounded-[28px] border border-white/80 shadow-[0_8px_30px_rgba(0,0,0,0.02)] flex flex-col justify-between h-full overflow-hidden"
+            >
+              <div className="absolute top-44 -right-16 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-colors duration-500 pointer-events-none" />
               
-              <div>
-                {/* Icon Wrapper */}
-                <div className="mb-6 w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all duration-500 shadow-inner group-hover:scale-110">
-                  <Globe className="w-7 h-7" />
-                </div>
-
-                {/* Name */}
-                <h3 className="text-xl font-extrabold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
-                  Online Training
-                </h3>
-
-                {/* Description */}
-                <p className="text-slate-600 text-sm leading-relaxed mb-6">
-                  Live, interactive digital classrooms led by senior cloud and stack architects. Access instant screen-share support, interactive coding sandboxes, and recorded sessions.
-                </p>
-
-                {/* Details list */}
-                <div className="space-y-3.5 border-t border-slate-100/80 pt-5 mb-8">
-                  <div className="flex items-center gap-3 text-slate-600 text-xs font-semibold">
-                    <div className="w-8 h-8 rounded-lg bg-blue-50/80 flex items-center justify-center text-blue-600 flex-shrink-0">
-                      <Clock className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">DURATION</p>
-                      <p className="text-slate-700">Flexible (3 to 6 Months)</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 text-slate-600 text-xs font-semibold">
-                    <div className="w-8 h-8 rounded-lg bg-indigo-50/80 flex items-center justify-center text-indigo-600 flex-shrink-0">
-                      <Calendar className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">TIMING</p>
-                      <p className="text-slate-700">Evening & Weekend Batches Available</p>
-                    </div>
-                  </div>
-                </div>
+              <div className="relative h-[220px] w-full overflow-hidden rounded-t-[28px]">
+                <img 
+                  src="https://images.unsplash.com/photo-1588702547919-26089e690ecc?auto=format&fit=crop&w=1200&q=80" 
+                  alt="Online Training" 
+                  className="card-img w-full h-full object-cover" 
+                  referrerPolicy="no-referrer"
+                />
+                {/* Blue gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/65 via-blue-900/15 to-transparent mix-blend-multiply opacity-80 group-hover:opacity-95 transition-opacity duration-500" />
               </div>
 
-              {/* Action Button */}
-              <button 
-                onClick={(e) => {
-                  handleButtonClick(e);
-                  setIsContactModalOpen(true);
-                }}
-                className="w-full py-3.5 bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white hover:shadow-lg hover:shadow-blue-500/15 font-bold rounded-2xl active:scale-95 transition-all duration-300 cursor-pointer text-center text-sm flex items-center justify-center gap-2 group/btn"
-              >
-                <span>Enroll Now</span>
-                <ArrowRight className="w-4 h-4 transform group-hover/btn:translate-x-1 transition-transform duration-300" />
-              </button>
-            </div>
+              <div className="p-8 pt-6 flex flex-col flex-grow justify-between">
+                <div className="flex flex-col flex-grow">
+                  {/* Icon Wrapper */}
+                  <div className="icon-wrapper mb-6 w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center shadow-inner overflow-hidden">
+                    <Globe className="w-7 h-7 transform transition-transform duration-500 group-hover:scale-125" />
+                  </div>
+
+                  {/* Name */}
+                  <h3 className="card-title text-xl font-extrabold text-slate-900 mb-3">
+                    Online Training
+                  </h3>
+
+                  {/* Description */}
+                  <p className="card-description text-slate-600 text-sm leading-relaxed mb-8">
+                    Live, interactive digital classrooms led by senior cloud and stack architects. Access instant screen-share support, interactive coding sandboxes, and recorded sessions.
+                  </p>
+                </div>
+
+                {/* Action Button */}
+                <button 
+                  onClick={(e) => {
+                    handleButtonClick(e);
+                    setIsContactModalOpen(true);
+                  }}
+                  className="enroll-btn w-full py-3.5 bg-white border-2 border-blue-600 text-blue-600 font-bold rounded-2xl active:scale-95 cursor-pointer text-center text-sm flex items-center justify-center gap-2 group/btn relative overflow-hidden"
+                >
+                  <span className="relative z-10">Enroll Now</span>
+                  <ArrowRight className="arrow-icon w-4 h-4 relative z-10" />
+                  {/* Shine overlay */}
+                  <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 -translate-x-full group-hover/btn:animate-shine pointer-events-none" />
+                </button>
+              </div>
+            </motion.div>
 
             {/* Mode 3: Hybrid Training (Online + Offline) */}
-            <div className="group relative bg-gradient-to-br from-blue-50/40 via-white/80 to-indigo-50/40 backdrop-blur-lg rounded-[28px] p-8 border border-blue-100/50 shadow-[0_12px_35px_rgba(37,99,235,0.04)] hover:shadow-[0_24px_50px_rgba(37,99,235,0.12)] hover:-translate-y-2 hover:border-blue-400/80 transition-all duration-500 flex flex-col justify-between h-full overflow-hidden">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-blue-600/10 to-indigo-600/10 rounded-bl-[28px]" />
-              {/* Highlight Tag */}
-              <div className="absolute top-4 right-4 z-10">
-                <span className="text-[9px] font-extrabold text-blue-700 bg-blue-100/70 border border-blue-200 uppercase tracking-widest px-2.5 py-1 rounded-full shadow-sm">
-                  RECOMMENDED
-                </span>
+            <motion.div 
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+              className="training-card group relative bg-gradient-to-br from-blue-50/40 via-white/80 to-indigo-50/40 backdrop-blur-lg rounded-[28px] border border-blue-100/50 shadow-[0_12px_35px_rgba(37,99,235,0.04)] flex flex-col justify-between h-full overflow-hidden"
+            >
+              <div className="relative h-[220px] w-full overflow-hidden rounded-t-[28px]">
+                <img 
+                  src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80" 
+                  alt="Hybrid Training" 
+                  className="card-img w-full h-full object-cover" 
+                  referrerPolicy="no-referrer"
+                />
+                {/* Blue gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/65 via-blue-900/15 to-transparent mix-blend-multiply opacity-80 group-hover:opacity-95 transition-opacity duration-500" />
               </div>
 
-              <div>
-                <div className="mb-6 w-14 h-14 bg-gradient-to-tr from-blue-600 to-indigo-600 text-white rounded-2xl flex items-center justify-center transition-all duration-500 shadow-md group-hover:scale-110 shadow-blue-500/20">
-                  <Laptop className="w-7 h-7" />
-                </div>
-
-                <h3 className="text-xl font-extrabold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
-                  Hybrid Training
-                </h3>
-
-                <p className="text-slate-600 text-sm leading-relaxed mb-6">
-                  The perfect synthesis. Attend engaging, premium live webinars online combined with mandatory weekly physical labs, cohort-focused team hackathons, and on-demand mock drives.
-                </p>
-
-                <div className="space-y-3.5 border-t border-slate-100/80 pt-5 mb-8">
-                  <div className="flex items-center gap-3 text-slate-600 text-xs font-semibold">
-                    <div className="w-8 h-8 rounded-lg bg-blue-50/80 flex items-center justify-center text-blue-600 flex-shrink-0">
-                      <Clock className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">DURATION</p>
-                      <p className="text-slate-700">Adaptive (4 to 6 Months)</p>
-                    </div>
+              <div className="p-8 pt-6 flex flex-col flex-grow justify-between">
+                <div className="flex flex-col flex-grow">
+                  <div className="icon-wrapper mb-6 w-14 h-14 bg-gradient-to-tr from-blue-600 to-indigo-600 text-white rounded-2xl flex items-center justify-center shadow-md shadow-blue-500/20 overflow-hidden">
+                    <Laptop className="w-7 h-7 transform transition-transform duration-500 group-hover:scale-125" />
                   </div>
 
-                  <div className="flex items-center gap-3 text-slate-600 text-xs font-semibold">
-                    <div className="w-8 h-8 rounded-lg bg-indigo-50/80 flex items-center justify-center text-indigo-600 flex-shrink-0">
-                      <Calendar className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">TIMING</p>
-                      <p className="text-slate-700">Mixed / Customizable Timings</p>
-                    </div>
-                  </div>
+                  <h3 className="card-title text-xl font-extrabold text-slate-900 mb-3">
+                    Hybrid Training
+                  </h3>
+
+                  <p className="card-description text-slate-600 text-sm leading-relaxed mb-8">
+                    The perfect synthesis. Attend engaging, premium live webinars online combined with mandatory weekly physical labs, cohort-focused team hackathons, and on-demand mock drives.
+                  </p>
                 </div>
+
+                <button 
+                  onClick={(e) => {
+                    handleButtonClick(e);
+                    setIsContactModalOpen(true);
+                  }}
+                  className="enroll-btn w-full py-3.5 bg-white border-2 border-blue-600 text-blue-600 font-bold rounded-2xl active:scale-95 cursor-pointer text-center text-sm flex items-center justify-center gap-2 group/btn relative overflow-hidden"
+                >
+                  <span className="relative z-10">Enroll Now</span>
+                  <ArrowRight className="arrow-icon w-4 h-4 relative z-10" />
+                  {/* Shine overlay */}
+                  <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 -translate-x-full group-hover/btn:animate-shine pointer-events-none" />
+                </button>
               </div>
-
-              <button 
-                onClick={(e) => {
-                  handleButtonClick(e);
-                  setIsContactModalOpen(true);
-                }}
-                className="w-full py-3.5 bg-[#2563EB] text-white hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-500/20 font-bold rounded-2xl active:scale-95 transition-all duration-300 cursor-pointer text-center text-sm flex items-center justify-center gap-2 group/btn"
-              >
-                <span>Enroll Now</span>
-                <ArrowRight className="w-4 h-4 transform group-hover/btn:translate-x-1 transition-transform duration-300" />
-              </button>
-            </div>
+            </motion.div>
 
           </div>
         </section>
@@ -1310,7 +1395,7 @@ export default function App() {
                     <div>
                       <p className="text-xs text-slate-400 font-medium">Location</p>
                       <p className="text-sm font-semibold text-slate-100">
-                        TechNova Career Solution<br />
+                        Tech Nova Career Solution<br />
                         Chennai, Tamil Nadu, India
                       </p>
                     </div>
@@ -1484,7 +1569,7 @@ export default function App() {
             <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-5 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <HeartHandshake className="w-5 h-5 text-blue-100" />
-                <h3 className="text-lg font-bold font-display">TechNova Consultations</h3>
+                <h3 className="text-lg font-bold font-display">Tech Nova Consultations</h3>
               </div>
               <button 
                 onClick={() => setIsContactModalOpen(false)}
@@ -1687,7 +1772,7 @@ export default function App() {
                 </div>
                 <div className="flex flex-col">
                   <span className="text-xl font-extrabold tracking-wider text-white font-display leading-tight select-none">
-                    TECHNOVA
+                    TECH NOVA
                   </span>
                   <span className="text-[10px] tracking-[0.16em] uppercase text-blue-400 font-bold leading-none mt-1 select-none">
                     Career Solution
@@ -1736,7 +1821,7 @@ export default function App() {
                     <MapPin className="w-4 h-4" />
                   </div>
                   <span className="text-sm text-slate-400 leading-relaxed pt-0.5">
-                    TechNova Career Solution<br />
+                    Tech Nova Career Solution<br />
                     Chennai, Tamil Nadu, India
                   </span>
                 </li>
@@ -1792,7 +1877,7 @@ export default function App() {
           {/* Copyright Section */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-slate-400 text-center md:text-left select-none">
-              © 2026 TechNova Career Solution. All Rights Reserved.
+              © 2026 Tech Nova Career Solution. All Rights Reserved.
             </p>
           </div>
         </div>
