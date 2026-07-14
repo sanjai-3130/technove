@@ -41,7 +41,8 @@ import {
   Calendar,
   Check,
   RefreshCw,
-  UserCheck
+  UserCheck,
+  MessageCircle
 } from 'lucide-react';
 
 // Define the type for the custom ripple effect
@@ -167,13 +168,13 @@ export default function App() {
       name: "Aarav Sharma",
       role: "Software Engineer at Microsoft",
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120",
-      quote: "Tech Nova completely transformed my career trajectory. The direct placement assistance and high-quality courses gave me the edge I needed to land a role at Microsoft."
+      quote: "TechNova completely transformed my career trajectory. The direct placement assistance and high-quality courses gave me the edge I needed to land a role at Microsoft."
     },
     {
       name: "Priya Patel",
       role: "Data Analyst at IBM",
       image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=120",
-      quote: "The practical, industry-aligned training at Tech Nova bridged the gap between theory and actual enterprise expectations. Highly recommended!"
+      quote: "The practical, industry-aligned training at TechNova bridged the gap between theory and actual enterprise expectations. Highly recommended!"
     },
     {
       name: "Rohan Das",
@@ -488,10 +489,10 @@ export default function App() {
               onClick={() => setActiveTab('Home')} 
               className="focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 rounded-xl transition-all flex-shrink-0"
             >
-              {/* Uploaded official Tech Nova Logo */}
+              {/* Uploaded official TechNova Logo */}
               <img 
                 src={companyLogo} 
-                alt="Tech Nova Logo" 
+                alt="TechNova Logo" 
                 referrerPolicy="no-referrer"
                 style={{ width: '70px', height: '70px' }}
                 className="object-contain mix-blend-multiply flex-shrink-0 transition-transform duration-500 group-hover:rotate-[15deg]"
@@ -505,7 +506,7 @@ export default function App() {
                 className="group/text focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 rounded-lg transition-all flex flex-col"
               >
                 <span className="text-xl md:text-2xl font-extrabold tracking-wider text-[#2563EB] font-display leading-tight m-0 p-0 select-none group-hover/text:text-blue-700 transition-colors">
-                  TECH NOVA
+                  TECHNOVA
                 </span>
                 <span className="text-[11px] tracking-[0.16em] uppercase text-slate-500 font-semibold leading-none mt-1 select-none font-sans">
                   Career Solution
@@ -682,7 +683,7 @@ export default function App() {
       {/* CORE PRESENTATION BODY */}
       <main className="max-w-7xl mx-auto px-4 md:px-6 mt-6 relative z-10">
 
-        {/* HERO INTRO & INTERACTIVE SHOWCASE FOR TECH NOVA */}
+        {/* HERO INTRO & INTERACTIVE SHOWCASE FOR TECHNOVA */}
         <section id="home" className="py-12 md:py-16 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
           {/* Left Hero Description */}
@@ -700,7 +701,7 @@ export default function App() {
             </h1>
             
             <p className="text-lg text-slate-600 max-w-2xl leading-relaxed">
-              Tech Nova delivers a unified, high-tier modern curriculum pairing state-of-the-art software systems with direct, prioritized corporate hiring pipelines. Join over 8,000+ certified specialists active globally.
+              TechNova delivers a unified, high-tier modern curriculum pairing state-of-the-art software systems with direct, prioritized corporate hiring pipelines. Join over 8,000+ certified specialists active globally.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mt-2">
@@ -871,7 +872,7 @@ export default function App() {
                           <Sparkles className="w-4 h-4 text-emerald-400 animate-pulse" />
                         </h4>
                         <p className="text-slate-400 text-xs mt-1 leading-relaxed">
-                          Secure top positions directly with Tech Nova's verified 120+ global enterprise partners.
+                          Secure top positions directly with TechNova's verified 120+ global enterprise partners.
                         </p>
                       </div>
                     </div>
@@ -890,13 +891,13 @@ export default function App() {
               OUR MISSION
             </span>
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mt-3 font-display">
-              About Tech Nova
+              About TechNova
             </h2>
             <p className="text-slate-600 mt-4 leading-relaxed">
               We specialize in structured career acceleration, transforming talented individuals into highly productive engineering leads. With direct support from tier-1 MNCs, we bridge industry gaps securely.
             </p>
 
-            {/* Why Choose Tech Nova? Subsection with Framer Motion fade-in */}
+            {/* Why Choose TechNova? Subsection with Framer Motion fade-in */}
             <motion.div 
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -906,7 +907,7 @@ export default function App() {
             >
               <h3 className="text-lg md:text-xl font-extrabold text-slate-900 mb-6 font-display flex items-center gap-2.5">
                 <span className="w-1.5 h-6 bg-blue-600 rounded-full" />
-                Why Choose Tech Nova?
+                Why Choose TechNova?
               </h3>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1360,7 +1361,7 @@ export default function App() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 relative z-10">
               <div className="lg:col-span-5 flex flex-col items-start gap-6 text-left">
                 <span className="text-blue-300 font-bold text-xs tracking-widest uppercase bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-full">
-                  CONNECT WITH TECH NOVA
+                  CONNECT WITH TECHNOVA
                 </span>
                 
                 <h2 className="text-3xl md:text-4xl font-extrabold leading-tight font-display text-white">
@@ -1399,7 +1400,7 @@ export default function App() {
                     <div>
                       <p className="text-xs text-slate-400 font-medium">Location</p>
                       <p className="text-sm font-semibold text-slate-100">
-                        Tech Nova Career Solution<br />
+                        TechNova Career Solution<br />
                         Chennai, Tamil Nadu, India
                       </p>
                     </div>
@@ -1573,7 +1574,7 @@ export default function App() {
             <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-5 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <HeartHandshake className="w-5 h-5 text-blue-100" />
-                <h3 className="text-lg font-bold font-display">Tech Nova Consultations</h3>
+                <h3 className="text-lg font-bold font-display">TechNova Consultations</h3>
               </div>
               <button 
                 onClick={() => setIsContactModalOpen(false)}
@@ -1743,13 +1744,35 @@ export default function App() {
             exit={{ opacity: 0, y: 20, scale: 0.8 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-[#F59E0B] hover:bg-amber-500 text-white shadow-[0_4px_14px_rgba(245,158,11,0.4)] hover:shadow-[0_6px_20px_rgba(245,158,11,0.6)] hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 border border-amber-400/20"
+            className="fixed bottom-24 right-6 z-50 w-12 h-12 rounded-full bg-[#F59E0B] hover:bg-amber-500 text-white shadow-[0_4px_14px_rgba(245,158,11,0.4)] hover:shadow-[0_6px_20px_rgba(245,158,11,0.6)] hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 border border-amber-400/20"
             aria-label="Scroll back to top"
           >
             <ArrowUp className="w-5 h-5 text-white" />
           </motion.button>
         )}
       </AnimatePresence>
+
+      {/* FLOATING WHATSAPP SUPPORT BUTTON */}
+      <div id="whatsapp-support-floating" className="fixed bottom-6 right-6 z-50 group flex items-center">
+        {/* Tooltip */}
+        <div className="absolute right-full mr-3 bg-slate-900 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap border border-slate-800 flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-ping" />
+          Chat with Us
+          {/* Arrow */}
+          <div className="absolute left-full top-1/2 -translate-y-1/2 border-y-4 border-y-transparent border-l-4 border-l-slate-900" />
+        </div>
+
+        {/* Button Link */}
+        <a
+          href="https://wa.me/919952077910?text=Hello%20TechNova%20Career%20Solution,%20I%20would%20like%20to%20know%20more%20about%20your%20courses."
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-14 h-14 rounded-full bg-[#25D366] text-white shadow-[0_6px_20px_rgba(37,211,102,0.4)] hover:shadow-[0_10px_28px_rgba(37,211,102,0.65)] hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center cursor-pointer border border-[#20ba5a]/50 focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2 whatsapp-btn-bounce"
+          aria-label="Chat with Us on WhatsApp"
+        >
+          <MessageCircle className="w-7 h-7 text-white fill-white" />
+        </a>
+      </div>
 
       {/* FOOTER */}
       <footer className="w-full bg-[#0F172A] text-slate-300 relative overflow-hidden mt-20">
@@ -1769,14 +1792,14 @@ export default function App() {
                 <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center p-1.5 shadow-[0_4px_12px_rgba(255,255,255,0.08)] border border-slate-800">
                   <img 
                     src={companyLogo} 
-                    alt="Tech Nova Logo" 
+                    alt="TechNova Logo" 
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-contain"
                   />
                 </div>
                 <div className="flex flex-col">
                   <span className="text-xl font-extrabold tracking-wider text-white font-display leading-tight select-none">
-                    TECH NOVA
+                    TECHNOVA
                   </span>
                   <span className="text-[10px] tracking-[0.16em] uppercase text-blue-400 font-bold leading-none mt-1 select-none">
                     Career Solution
@@ -1825,7 +1848,7 @@ export default function App() {
                     <MapPin className="w-4 h-4" />
                   </div>
                   <span className="text-sm text-slate-400 leading-relaxed pt-0.5">
-                    Tech Nova Career Solution<br />
+                    TechNova Career Solution<br />
                     Chennai, Tamil Nadu, India
                   </span>
                 </li>
@@ -1881,7 +1904,7 @@ export default function App() {
           {/* Copyright Section */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-slate-400 text-center md:text-left select-none">
-              © 2026 Tech Nova Career Solution. All Rights Reserved.
+              © 2026 TechNova Career Solution. All Rights Reserved.
             </p>
           </div>
         </div>

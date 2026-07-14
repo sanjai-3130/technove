@@ -208,6 +208,28 @@
 }
 
 /* ==========================================================================
+   WHATSAPP FLOATING BUTTON STYLES
+   ========================================================================== */
+@keyframes whatsapp-bounce {
+  0%, 100%, 75% {
+    transform: translateY(0);
+  }
+  87.5% {
+    transform: translateY(-8px);
+  }
+}
+
+.whatsapp-btn-bounce {
+  animation: whatsapp-bounce 4s ease-in-out infinite;
+}
+
+#whatsapp-support-floating:hover .whatsapp-btn-bounce,
+#whatsapp-support-floating:active .whatsapp-btn-bounce,
+#whatsapp-support-floating:focus-within .whatsapp-btn-bounce {
+  animation-play-state: paused !important;
+}
+
+/* ==========================================================================
    RESPONSIVE MOBILE STYLES (320px - 768px)
    ========================================================================== */
 @media (max-width: 768px) {
