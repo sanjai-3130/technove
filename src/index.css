@@ -361,13 +361,14 @@
   /* TOP INFORMATION BAR */
   #announcement-ticker {
     height: auto !important;
-    padding: 10px 0 !important;
+    padding: 12px 0 !important;
     overflow-x: auto !important;
     white-space: nowrap !important;
     display: flex !important;
     align-items: center !important;
     -webkit-overflow-scrolling: touch !important;
     scrollbar-width: none !important; /* Firefox */
+    -ms-overflow-style: none !important; /* IE/Edge */
   }
 
   #announcement-ticker::-webkit-scrollbar {
@@ -381,13 +382,11 @@
   }
 
   #announcement-ticker .animate-marquee {
-    animation: none !important;
+    animation: marquee 20s linear infinite !important;
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: nowrap !important;
-    gap: 28px !important; /* 24-32px spacing between items */
-    padding-left: 16px !important;
-    padding-right: 16px !important;
+    gap: 32px !important; /* Spacing between items */
     width: max-content !important;
   }
 
@@ -402,13 +401,13 @@
     margin-right: 0 !important;
   }
 
-  /* Hide second set / duplicates to allow clean swipe scrolling on mobile */
-  #announcement-ticker .animate-marquee > div:nth-child(n+6) {
-    display: none !important;
-  }
-
-  #announcement-ticker .animate-marquee > div:nth-child(5) > span {
-    display: none !important; /* Hide separator on the last item */
+  /* Pause the animation when the user touches or hovers over the bar */
+  #announcement-ticker:hover .animate-marquee,
+  #announcement-ticker:active .animate-marquee,
+  #announcement-ticker:focus-within .animate-marquee,
+  .animate-marquee:hover,
+  .animate-marquee:active {
+    animation-play-state: paused !important;
   }
 
   /* HERO SECTION */
